@@ -1,0 +1,7 @@
+# postgres default topic name pattern: serverName.schemaName.tableName
+
+oc exec -it broker-kafka-0 -- /opt/kafka/bin/kafka-console-consumer.sh \
+    --bootstrap-server localhost:9092 \
+    --from-beginning \
+    --property print.key=true \
+    --topic aisdb.testuser.ships_ais

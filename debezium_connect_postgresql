@@ -1,0 +1,22 @@
+oc exec -i -c kafka ais-cluster-kafka-0 -- curl -X POST \
+    -H "Accept:application/json" \
+    -H "Content-Type:application/json" \
+    http://debezium-connect-api:8083/connectors -d @- <<'EOF'
+
+{
+  "name": "ais-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "plugin.name": "pgoutput",
+    "database.hostname": "ais-pg-cluster.pgo.svc.cluster.local",
+    "database.port": "5432",
+    "database.user": "testuser",
+    "database.password": "redhat",
+    "database.dbname" : "aisdb",
+    "database.server.name": "aisdb",
+    "table.whitelist": "testuser.ships_ais",
+    "publication.name": "aispub"
+  }
+}
+EOF
+
